@@ -1,19 +1,17 @@
 ---
 layout: project
 type: project
-image: img/vacay/vacay-square.png
-title: "Vacay"
-date: 2015
+image: img/RaspberryPi.jpg
+title: "Output Sensors reading as spreadsheets"
+date: 2020
 published: true
 labels:
-  - Javascript
-  - Meteor
-  - MongoDB
-  - GitHub
-summary: "A responsive web application for travel planning that my team developed in ICS 415."
+  - Python
+  - Raspberry Pi
+summary: "Created a function that Output Sensors reading to google spreadsheets"
 ---
 
-<img class="img-fluid" src="../img/vacay/vacay-home-page.png">
+<img class="img-fluid" src="../img/RaspberryPi.jpg">
 
 ```python
 #this whole srcipt only can be run as a function
