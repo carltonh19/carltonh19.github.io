@@ -9,7 +9,7 @@ labels:
   - Homework assignemnt
   - Java
   - ICS 211
-summary: "My team developed a robotic mouse that won first place in the 2015 UH Micromouse competition."
+summary: "I made a soduku program from the Homework assignment of ICS 211"
 ---
 
 <div class="text-center p-4">
