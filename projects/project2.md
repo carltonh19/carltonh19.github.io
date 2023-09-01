@@ -17,7 +17,7 @@ summary: "My team developed a robotic mouse that won first place in the 2015 UH 
 </div>
 
 Here is my Sudoku homework assignment from ICS 211.
-```cpp
+```java
 package edu.ics211.h09;
 
 import java.util.ArrayList;
@@ -216,5 +216,3 @@ public class Sudoku {
 }
 
 ```
-
-You can learn more at the [UH Micromouse News Announcement](https://manoa.hawaii.edu/news/article.php?aId=2857).
