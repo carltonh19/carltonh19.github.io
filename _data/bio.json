@@ -9,10 +9,10 @@
     "summary": "I am studying for a B.A. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2025.",
     "location": { "address": "", "postalCode": "96822", "city": "Honolulu", "countryCode": "USA", "region": "Hawaii" },
     "profiles": [
-      { "network": "github", "username": "carltonh19", "url": "http://github.com/carlton19" },
+      { "network": "github", "username": "carltonh19", "url": "http://github.com/carltonh19" },
       { "network": "linkedin", "username": "Carlton Hung", "url": "https://www.linkedin.com/in/carlton-hung-74a14a28a/" },
-      { "network": "twitter", "username": "n/a", "url": "http://twitter.com/changeme" },
-      { "network": "instagram", "username": "n/a", "url": "http://instagram.com/changeme" }
+      { "network": "twitter", "username": "n/a", "url": "" },
+      { "network": "instagram", "username": "n/a", "url": "" }
     ]
   },
   "interests": [
@@ -35,7 +35,7 @@
   "education": [
     {
       "institution": "University of Hawaii, Honolulu, HI",
-      "area": "Computer Science (expected Spring, 2018)",
+      "area": "Computer Science (expected Spring, 2025)",
       "studyType": "B.A.",
       "startDate": "2021-09-01",
       "endDate": "Present",
