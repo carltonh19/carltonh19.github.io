@@ -1,7 +1,7 @@
 ---
 layout: project
 type: project
-image: ../images/pc3.jpg
+image: ../img/pc3.jpg
 title: "Build my Own PC and setup my own work space"
 date: 2020
 published: true
