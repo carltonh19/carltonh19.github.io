@@ -45,52 +45,52 @@
   ],
   "work": [
     {
-      "company": "",
-      "position": "",
+      "company": "n/a",
+      "position": "n/a",
       "website": "",
-      "startDate": "",
+      "startDate": "2020-10-01",
       "endDate": "",
-      "summary": "",
+      "summary": "n/a",
       "highlights": [
-        ""
+        "n/a"
       ]
     }
   "volunteer": [
     {
-      "organization": "",
+      "organization": "n/a",
       "website": "",
-      "position": "",
-      "startDate": "",
+      "position": "n/a",
+      "startDate": "2020-10-01",
       "endDate": "",
-      "summary": "",
+      "summary": "n/a",
       "highlights": [
-        ""
+        "n/a"
       ]
     },
     {
-      "organization": "",
+      "organization": "n/a",
       "website": "",
-      "position": "",
-      "startDate": "",
+      "position": "n/a",
+      "startDate": "2020-10-01",
       "endDate": "",
-      "summary": "",
+      "summary": "n/a",
       "highlights": [
-        ""
+        "n/a"
       ]
     }
   ],
   "awards": [
     {
-      "title": "",
-      "date": "",
-      "awarder": "",
-      "summary": ""
+      "title": "n/a",
+      "date": "2020-10-01",
+      "awarder": "n/a",
+      "summary": "n/a"
     },
     {
-      "title": "",
-      "date": "",
-      "awarder": "",
-      "summary": ""
+      "title": "n/a",
+      "date": "2020-10-01",
+      "awarder": "n/a",
+      "summary": "n/a"
     }
   ],
   "references": [
