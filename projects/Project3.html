@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Output Sensors reading as spreadsheets | Carlton Hung | Professional Portfolio">
+    <meta name="description" content="">
+    <meta name="image" content="https://github.com/carltonh19.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Carlton Hung | Professional Portfolio">
+    <meta property="og:url" content="https://carltonh19.github.io/projects/Project3.html">
+    <meta property="og:title" content="Output Sensors reading as spreadsheets | Carlton Hung | Professional Portfolio">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://github.com/carltonh19.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/techfolio-theme/default.css">
+    <link rel="stylesheet" type="text/css" href="/css/rouge/github.css">
+    <!-- Load MathJax if 'mathjax: true' is found in your _config.yml. -->
+    
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+
+    <title>Output Sensors reading as spreadsheets | Carlton Hung | Professional Portfolio</title>
+  </head>
+  <body>
+  <header class="navbar navbar-expand navbar-light bg-light bg-gradient border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Carlton Hung</a>
+    <div class="ms-auto">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <a class="nav-link" href="/#projects">Projects</a>
+        <a class="nav-link" href="/#essays">Essays</a>
+        <a class="nav-link" href="/resume.html">Resume</a>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="container py-4">
+  <h1 class="display-4">Output Sensors reading as spreadsheets</h1>
+ <p><img class="img-fluid" src="../img/RaspberryPi.jpg" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#this whole srcipt only can be run as a function
+</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">board</span>
+<span class="kn">import</span> <span class="nn">busio</span>
+<span class="kn">import</span> <span class="nn">adafruit_si7021</span>
+<span class="kn">import</span> <span class="nn">RPi.GPIO</span> <span class="k">as</span> <span class="n">GPIO</span>
+<span class="kn">import</span> <span class="nn">gspread</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">oauth2client.service_account</span> <span class="kn">import</span> <span class="n">ServiceAccountCredentials</span>
+
+
+<span class="n">scope</span> <span class="o">=</span> <span class="p">[</span><span class="s">'https://spreadsheets.google.com/feeds'</span><span class="p">,</span>
+        <span class="s">'https://www.googleapis.com/auth/drive'</span><span class="p">]</span>
+
+<span class="n">credentials</span> <span class="o">=</span> <span class="n">ServiceAccountCredentials</span><span class="p">.</span><span class="n">from_json_keyfile_name</span><span class="p">(</span><span class="s">'spreadsheets-4bd3d449e5d1.json'</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
+
+<span class="n">gc</span> <span class="o">=</span> <span class="n">gspread</span><span class="p">.</span><span class="n">authorize</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
+
+<span class="n">wks</span> <span class="o">=</span> <span class="n">gc</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"spreadsheet1"</span><span class="p">).</span><span class="n">sheet1</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'access to google spread sheet'</span><span class="p">)</span>
+
+
+<span class="c1">#Script for Temperature/Humidity sensing
+#Create library object using our Bus I2C port
+</span><span class="n">i2c</span> <span class="o">=</span> <span class="n">busio</span><span class="p">.</span><span class="n">I2C</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">SCL</span><span class="p">,</span> <span class="n">board</span><span class="p">.</span><span class="n">SDA</span><span class="p">)</span>
+<span class="n">sensor</span> <span class="o">=</span> <span class="n">adafruit_si7021</span><span class="p">.</span><span class="n">SI7021</span><span class="p">(</span><span class="n">busio</span><span class="p">.</span><span class="n">I2C</span><span class="p">(</span><span class="n">board</span><span class="p">.</span><span class="n">SCL</span><span class="p">,</span> <span class="n">board</span><span class="p">.</span><span class="n">SDA</span><span class="p">))</span>
+<span class="n">reading</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1">#GPIO.setmode(GPIO.BOARD)
+</span>
+<span class="c1">#define the pin that goes to the light sensor circuit
+</span><span class="n">pin_to_circuit</span> <span class="o">=</span> <span class="mi">4</span> 
+<span class="k">def</span> <span class="nf">rc_time</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1">#Output on the pin for 
+</span>        <span class="n">GPIO</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">,</span> <span class="n">GPIO</span><span class="p">.</span><span class="n">OUT</span><span class="p">)</span>
+        <span class="n">GPIO</span><span class="p">.</span><span class="n">output</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">,</span> <span class="n">GPIO</span><span class="p">.</span><span class="n">LOW</span><span class="p">)</span>
+        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+        <span class="c1">#Change the pin back to input
+</span>        <span class="n">GPIO</span><span class="p">.</span><span class="n">setup</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">,</span> <span class="n">GPIO</span><span class="p">.</span><span class="n">IN</span><span class="p">)</span>
+ 
+        <span class="c1">#Count until the pin goes high
+</span>        <span class="k">while</span> <span class="p">(</span><span class="n">GPIO</span><span class="p">.</span><span class="nb">input</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">)</span> <span class="o">==</span> <span class="n">GPIO</span><span class="p">.</span><span class="n">LOW</span><span class="p">):</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">count</span>
+
+<span class="c1"># number count in each function
+</span><span class="n">start_from</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">'start from:'</span><span class="p">))</span>
+<span class="n">data_pr_sec</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">'data per second:'</span><span class="p">))</span>
+<span class="n">count1</span> <span class="o">=</span> <span class="n">start_from</span>
+<span class="n">count2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count3</span> <span class="o">=</span> <span class="n">start_from</span>
+<span class="n">count4</span> <span class="o">=</span> <span class="n">start_from</span>
+<span class="n">count5</span> <span class="o">=</span> <span class="n">start_from</span>
+<span class="n">count6</span> <span class="o">=</span> <span class="n">start_from</span>
+<span class="k">def</span> <span class="nf">countrow1</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">count1</span>
+        <span class="n">count1</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count1</span>
+
+<span class="k">def</span> <span class="nf">countrow2</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">count3</span>
+        <span class="n">count3</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count3</span>
+
+<span class="k">def</span> <span class="nf">countrow3</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">count4</span>
+        <span class="n">count4</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count4</span>
+
+<span class="k">def</span> <span class="nf">countrow4</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">count5</span>
+        <span class="n">count5</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count5</span>
+
+<span class="k">def</span> <span class="nf">countrow5</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">count6</span>
+        <span class="n">count6</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count6</span>
+
+<span class="k">def</span> <span class="nf">countcolumn</span><span class="p">():</span>
+        <span class="k">global</span> <span class="n">count2</span>
+        <span class="n">count2</span> <span class="o">+=</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count2</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Reading Temperature(°C) Humidity(%) Light(rc_time)"</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="n">reading_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"%d %f %f %d %s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">reading</span><span class="p">,</span> <span class="n">sensor</span><span class="p">.</span><span class="n">temperature</span><span class="p">,</span> <span class="n">sensor</span><span class="p">.</span><span class="n">relative_humidity</span><span class="p">,</span> <span class="n">rc_time</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">),</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">isoformat</span><span class="p">()))</span>
+                <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">data_pr_sec</span><span class="p">)</span>
+                <span class="n">reading</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">row5</span> <span class="o">=</span> <span class="n">countrow5</span><span class="p">()</span>
+                <span class="n">col5</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">wks</span><span class="p">.</span><span class="n">update_cell</span><span class="p">(</span><span class="n">row5</span><span class="p">,</span> <span class="n">col5</span><span class="p">,</span> <span class="n">reading</span><span class="p">)</span>
+                <span class="n">row1</span> <span class="o">=</span> <span class="n">countrow1</span><span class="p">()</span>
+                <span class="n">col1</span> <span class="o">=</span> <span class="mi">2</span>
+                <span class="n">temperature_value</span> <span class="o">=</span> <span class="n">sensor</span><span class="p">.</span><span class="n">temperature</span>
+                <span class="n">wks</span><span class="p">.</span><span class="n">update_cell</span><span class="p">(</span><span class="n">row1</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">temperature_value</span><span class="p">)</span>
+                <span class="n">row2</span> <span class="o">=</span> <span class="n">countrow2</span><span class="p">()</span>
+                <span class="n">col2</span> <span class="o">=</span> <span class="mi">3</span>
+                <span class="n">wks</span><span class="p">.</span><span class="n">update_cell</span><span class="p">(</span><span class="n">row2</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">sensor</span><span class="p">.</span><span class="n">relative_humidity</span><span class="p">)</span>
+                <span class="n">row3</span> <span class="o">=</span> <span class="n">countrow3</span><span class="p">()</span>
+                <span class="n">col3</span> <span class="o">=</span> <span class="mi">4</span>
+                <span class="n">wks</span><span class="p">.</span><span class="n">update_cell</span><span class="p">(</span><span class="n">row3</span><span class="p">,</span> <span class="n">col3</span><span class="p">,</span> <span class="n">rc_time</span><span class="p">(</span><span class="n">pin_to_circuit</span><span class="p">))</span>
+                <span class="n">row4</span> <span class="o">=</span> <span class="n">countrow4</span><span class="p">()</span>
+                <span class="n">col4</span> <span class="o">=</span> <span class="mi">5</span>
+                <span class="n">wks</span><span class="p">.</span><span class="n">update_cell</span><span class="p">(</span><span class="n">row4</span><span class="p">,</span> <span class="n">col4</span><span class="p">,</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">isoformat</span><span class="p">())</span>
+                <span class="c1">#insert data from here to google spreadsheet
+</span>                <span class="c1">#Script for Light sensing
+</span>
+
+<span class="c1">#Catch when script is interupted, cleanup correctly
+</span><span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">countrow1</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+        <span class="n">GPIO</span><span class="p">.</span><span class="n">cleanup</span><span class="p">()</span>
+
+
+
+</code></pre></div></div>
+
+</div>
+
+<footer class="navbar navbar-expand navbar-light bg-light bg-gradient border-top">
+  <div class="container-fluid">
+    <div class="ms-auto">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <small><a class="nav-link" href="https://techfolios.github.io">Made with Techfolios</a></small>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>

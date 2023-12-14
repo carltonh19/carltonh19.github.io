@@ -1,0 +1,102 @@
+{
+  "basics": {
+    "name": "Carlton Hung",
+    "label": "Student",
+    "picture": "https://github.com/carltonh19.png",
+    "email": "carltonh@hawaii.edu",
+    "phone": "808-639-2482",
+    "website": "https://carltonh19.github.io",
+    "summary": "I am studying for a B.A. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2025.",
+    "location": { "address": "", "postalCode": "96822", "city": "Honolulu", "countryCode": "USA", "region": "Hawaii" },
+    "profiles": [
+      { "network": "github", "username": "carltonh19", "url": "http://github.com/carltonh19" },
+      { "network": "linkedin", "username": "Carlton Hung", "url": "https://www.linkedin.com/in/carlton-hung-74a14a28a/" },
+      { "network": "twitter", "username": "n/a", "url": "" },
+      { "network": "instagram", "username": "n/a", "url": "" }
+    ]
+  },
+  "interests": [
+    { "name": "front end" },
+    { "name": "Game desgin" },
+    { "name": "artificial intelligence" },
+    { "name": "Robotics" },
+    { "name": "3D Graphics" }
+  ],
+  "skills": [
+    {
+      "name": "Languages and Frameworks",
+      "keywords": [ "C", "C++", "Java", "Javascript", "Assembly", "Python" ]
+    },
+    {
+      "name": "Toolsets/OS",
+      "keywords": [ "Ubuntu", "Git/GitHub", "g++", "Windows" ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Hawaii, Honolulu, HI",
+      "area": "Computer Science (expected Spring, 2025)",
+      "studyType": "B.A.",
+      "startDate": "2021-09-01",
+      "endDate": "Present",
+      "courses": [
+      ]
+    }
+  ],
+  "work": [
+    {
+      "company": "n/a",
+      "position": "n/a",
+      "website": "",
+      "startDate": "2020-10-01",
+      "endDate": "",
+      "summary": "n/a",
+      "highlights": [
+        "n/a"
+      ]
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "n/a",
+      "website": "",
+      "position": "n/a",
+      "startDate": "2020-10-01",
+      "endDate": "",
+      "summary": "n/a",
+      "highlights": [
+        "n/a"
+      ]
+    },
+    {
+      "organization": "n/a",
+      "website": "",
+      "position": "n/a",
+      "startDate": "2020-10-01",
+      "endDate": "",
+      "summary": "n/a",
+      "highlights": [
+        "n/a"
+      ]
+    }
+  ],
+  "awards": [
+    {
+      "title": "n/a",
+      "date": "2020-10-01",
+      "awarder": "n/a",
+      "summary": "n/a"
+    },
+    {
+      "title": "n/a",
+      "date": "2020-10-01",
+      "awarder": "n/a",
+      "summary": "n/a"
+    }
+  ],
+  "references": [
+    {
+      "name": "Available upon request"
+    }
+  ]
+}
